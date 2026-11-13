@@ -1,0 +1,3 @@
+path,cycle,member,priority,run_id,reason
+fcst_cyc2026020100_mem1_runa.nc,2026-02-01T00:00:00Z,1,2,run_a,duplicate_lower_priority
+fcst_cyc2026020112_mem2_runa.nc,2026-02-01T12:00:00Z,2,1,run_a,file_missing

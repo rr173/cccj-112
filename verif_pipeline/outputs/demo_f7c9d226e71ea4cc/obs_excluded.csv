@@ -1,0 +1,4 @@
+station_id,valid_time,precip_mm,version,issued_time,reason
+S1,2026-02-01T12:00:00Z,4.22,1,2026-02-02T00:00:00Z,superseded_by_newer_version
+S1,2026-02-01T12:00:00Z,18.22,3,2026-02-05T00:00:00Z,issued_after_obs_cutoff
+S3,2026-02-02T06:00:00Z,8.03,2,2026-02-04T00:00:00Z,issued_after_obs_cutoff

@@ -1,0 +1,8 @@
+path,cycle,member,priority,run_id
+fcst_cyc2026020100_mem1_runa.nc,2026-02-01T00:00:00Z,1,2,run_a
+fcst_cyc2026020100_mem1_runb.nc,2026-02-01T00:00:00Z,1,1,run_b
+fcst_cyc2026020100_mem2_runa.nc,2026-02-01T00:00:00Z,2,1,run_a
+fcst_cyc2026020100_mem3_runa.nc,2026-02-01T00:00:00Z,3,1,run_a
+fcst_cyc2026020112_mem1_runa.nc,2026-02-01T12:00:00Z,1,1,run_a
+fcst_cyc2026020112_mem2_runa.nc,2026-02-01T12:00:00Z,2,1,run_a
+fcst_cyc2026020112_mem3_runa.nc,2026-02-01T12:00:00Z,3,1,run_a
