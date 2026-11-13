@@ -1,0 +1,3 @@
+station_id,lat,lon,region,weight
+E1,0.000,0.000,Existing,1.0
+E2,0.000,0.050,Existing,1.0

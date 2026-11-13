@@ -1,0 +1,125 @@
+{
+  "algorithm": {
+    "constructed_subsets_enumerated_equivalently": "4",
+    "dp_states_created": 2,
+    "dp_states_final": 2,
+    "method": "exact: optional candidates split into coverage-independent components; each component solved by a signature dynamic program (covered-once / covered-twice masks, one cheapest plan per signature, key-bit tie-break), then components combined by an exact knapsack over total purchase cost",
+    "n_candidates": 2,
+    "n_optional_candidates": 2,
+    "parts": {
+      "component_sizes": [
+        1,
+        1
+      ],
+      "component_state_counts": [
+        2,
+        2
+      ],
+      "n_components": 2
+    },
+    "worst_case_complexity": "sum over components of O(m_c * S_c), S_c <= min(2^m_c, 3^s_c) distinct coverage signatures (m_c candidates, s_c served samples in component c); the combine is O(n_cost_levels^2). Equivalent to enumerating 2^n_optional subsets, but merges identical coverage signatures and splits on independent components"
+  },
+  "coverage_summary": {
+    "samples_after": {
+      "redundant": 1,
+      "single": 3,
+      "uncovered": 0
+    },
+    "samples_before": {
+      "redundant": 0,
+      "single": 4,
+      "uncovered": 0
+    },
+    "single_source_after": [
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "N1",
+        "weight": "2"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "N2",
+        "weight": "2"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "N3",
+        "weight": "2"
+      }
+    ],
+    "total_sample_weight": "106",
+    "uncovered_after": [],
+    "weight_with_at_least_one_source": {
+      "after": "106",
+      "before": "106"
+    },
+    "weight_with_at_least_two_sources": {
+      "after": "100",
+      "before": "0"
+    }
+  },
+  "objectives": [
+    {
+      "after": "106",
+      "before": "106",
+      "direction": "maximise",
+      "layer": 1,
+      "name": "total weight of samples with >= 1 source"
+    },
+    {
+      "after": "100",
+      "before": "0",
+      "direction": "maximise",
+      "layer": 2,
+      "name": "total weight of samples with >= 2 distinct sources"
+    },
+    {
+      "direction": "minimise",
+      "layer": 3,
+      "name": "purchase cost of chosen new sites",
+      "value": "8"
+    },
+    {
+      "direction": "stable key order",
+      "layer": 4,
+      "name": "candidate key ordering tie-break",
+      "value": "A"
+    }
+  ],
+  "output_dir": "/workspace/verif_pipeline/outputs/planning_example_redundancy",
+  "parameters": {
+    "budget": "8",
+    "forbidden_candidates": [],
+    "radius_km": "30",
+    "required_candidates": []
+  },
+  "purchase": {
+    "budget_remaining": "0",
+    "chosen_candidates": [
+      "A"
+    ],
+    "cost_optional": "8",
+    "cost_required": "0",
+    "cost_total": "8",
+    "existing_stations_are_free": true,
+    "n_chosen": 1
+  },
+  "unselected_improvements": [
+    {
+      "candidate_id": "B",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "N1",
+        "N2",
+        "N3"
+      ],
+      "newly_redundant_weight": "6",
+      "reason": "not chosen: cost 8 exceeds the remaining budget 0"
+    }
+  ],
+  "verdict": "ok"
+}

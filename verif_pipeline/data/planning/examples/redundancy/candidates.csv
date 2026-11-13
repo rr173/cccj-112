@@ -1,0 +1,3 @@
+candidate_id,lat,lon,cost,required,forbidden,name
+A,0.000,0.100,8,0,0,second gauge for the high-value reach
+B,0.000,-0.300,8,0,0,garrison site for the three ordinary reaches

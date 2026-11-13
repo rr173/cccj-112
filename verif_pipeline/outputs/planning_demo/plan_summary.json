@@ -1,0 +1,296 @@
+{
+  "algorithm": {
+    "constructed_subsets_enumerated_equivalently": "1024",
+    "dp_states_created": 7,
+    "dp_states_final": 7,
+    "method": "exact: optional candidates split into coverage-independent components; each component solved by a signature dynamic program (covered-once / covered-twice masks, one cheapest plan per signature, key-bit tie-break), then components combined by an exact knapsack over total purchase cost",
+    "n_candidates": 12,
+    "n_optional_candidates": 10,
+    "parts": {
+      "component_sizes": [
+        7,
+        2,
+        1
+      ],
+      "component_state_counts": [
+        5,
+        2,
+        2
+      ],
+      "n_components": 3
+    },
+    "worst_case_complexity": "sum over components of O(m_c * S_c), S_c <= min(2^m_c, 3^s_c) distinct coverage signatures (m_c candidates, s_c served samples in component c); the combine is O(n_cost_levels^2). Equivalent to enumerating 2^n_optional subsets, but merges identical coverage signatures and splits on independent components"
+  },
+  "coverage_summary": {
+    "samples_after": {
+      "redundant": 1,
+      "single": 8,
+      "uncovered": 3
+    },
+    "samples_before": {
+      "redundant": 1,
+      "single": 4,
+      "uncovered": 7
+    },
+    "single_source_after": [
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "A",
+        "weight": "5"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "D",
+        "weight": "10"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "G",
+        "weight": "5"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "H",
+        "weight": "9"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "H2",
+        "weight": "6"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "T1",
+        "weight": "4"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "T2",
+        "weight": "4"
+      },
+      {
+        "reason": "only one source within the radius",
+        "sample_id": "UF",
+        "weight": "6"
+      }
+    ],
+    "total_sample_weight": "61",
+    "uncovered_after": [
+      {
+        "reason": "nearest source S1 is 61.683002 km away (> radius 50 km)",
+        "sample_id": "L1",
+        "weight": "3"
+      },
+      {
+        "reason": "nearest source S1 is 67.379210 km away (> radius 50 km)",
+        "sample_id": "L2",
+        "weight": "3"
+      },
+      {
+        "reason": "nearest source S1 is 68.798342 km away (> radius 50 km)",
+        "sample_id": "L3",
+        "weight": "2"
+      }
+    ],
+    "weight_with_at_least_one_source": {
+      "after": "53",
+      "before": "30"
+    },
+    "weight_with_at_least_two_sources": {
+      "after": "4",
+      "before": "4"
+    }
+  },
+  "objectives": [
+    {
+      "after": "53",
+      "before": "30",
+      "direction": "maximise",
+      "layer": 1,
+      "name": "total weight of samples with >= 1 source"
+    },
+    {
+      "after": "4",
+      "before": "4",
+      "direction": "maximise",
+      "layer": 2,
+      "name": "total weight of samples with >= 2 distinct sources"
+    },
+    {
+      "direction": "minimise",
+      "layer": 3,
+      "name": "purchase cost of chosen new sites",
+      "value": "18"
+    },
+    {
+      "direction": "stable key order",
+      "layer": 4,
+      "name": "candidate key ordering tie-break",
+      "value": "G3 | Q | R1"
+    }
+  ],
+  "output_dir": "/workspace/verif_pipeline/outputs/planning_demo",
+  "parameters": {
+    "budget": "18",
+    "forbidden_candidates": [
+      "F"
+    ],
+    "radius_km": "50",
+    "required_candidates": [
+      "R1"
+    ]
+  },
+  "purchase": {
+    "budget_remaining": "0",
+    "chosen_candidates": [
+      "G3",
+      "Q",
+      "R1"
+    ],
+    "cost_optional": "12",
+    "cost_required": "6",
+    "cost_total": "18",
+    "existing_stations_are_free": true,
+    "n_chosen": 3
+  },
+  "unselected_improvements": [
+    {
+      "candidate_id": "F",
+      "cost": "1",
+      "decision": "forbidden",
+      "fits_remaining_budget": false,
+      "newly_covered": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "newly_covered_weight": "8",
+      "newly_redundant": [
+        "A",
+        "D",
+        "UF"
+      ],
+      "newly_redundant_weight": "21",
+      "reason": "not chosen: marked forbidden"
+    },
+    {
+      "candidate_id": "G1",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "newly_covered_weight": "8",
+      "newly_redundant": [
+        "UF"
+      ],
+      "newly_redundant_weight": "6",
+      "reason": "not chosen: cost 10 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "G2",
+      "cost": "20",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "H2"
+      ],
+      "newly_redundant_weight": "6",
+      "reason": "not chosen: cost 20 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "K",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "newly_covered_weight": "8",
+      "newly_redundant": [
+        "A",
+        "G",
+        "UF"
+      ],
+      "newly_redundant_weight": "16",
+      "reason": "not chosen: cost 11 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "M",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "A",
+        "D",
+        "UF"
+      ],
+      "newly_redundant_weight": "21",
+      "reason": "not chosen: cost 5 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "P",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "G"
+      ],
+      "newly_redundant_weight": "5",
+      "reason": "not chosen: cost 6 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "R2",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "H"
+      ],
+      "newly_redundant_weight": "9",
+      "reason": "not chosen: cost 5 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "X",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "A",
+        "H",
+        "UF"
+      ],
+      "newly_redundant_weight": "20",
+      "reason": "not chosen: cost 8 exceeds the remaining budget 0"
+    },
+    {
+      "candidate_id": "Z",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": false,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [
+        "G"
+      ],
+      "newly_redundant_weight": "5",
+      "reason": "not chosen: cost 5 exceeds the remaining budget 0"
+    }
+  ],
+  "verdict": "ok"
+}

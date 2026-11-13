@@ -1,0 +1,3 @@
+candidate_id,lat,lon,cost,required,forbidden,name
+T1,0.000,0.020,4,0,0,tie site one
+T2,0.000,0.080,4,0,0,tie site two

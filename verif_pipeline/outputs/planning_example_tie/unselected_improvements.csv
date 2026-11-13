@@ -1,0 +1,2 @@
+candidate_id,sample_id,effect,sample_weight,candidate_cost,fits_remaining_budget
+T2,B,newly_covered,5,4,no

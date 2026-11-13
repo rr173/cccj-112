@@ -1,0 +1,3 @@
+candidate_id,name,lat,lon,cost,decision,selected,reason,serves_samples,n_serves_samples,contribution_samples,improves_if_added,newly_covered_weight,newly_redundant_weight,fits_remaining_budget
+F1,reach with no source,0,-0.4,9,chosen_optional,yes,chosen: optimiser selected this site; contribution in this plan +4 covered / +0 redundant weight,B,1,B:contribution_covered,,4,0,
+N,near the existing pair (wastes money),0,0.025,1,not_chosen,no,not chosen: adds no sample to the recommended plan,A,1,,,0,0,no

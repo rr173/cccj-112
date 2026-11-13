@@ -27,6 +27,14 @@ manifest 成员缺文件导致应有分母缩水）直接核对管线输出，�
 每次运行把全部结果写入以内容快照号命名的目录（如
 `outputs/demo_f7c9d226e71ea4cc/`）：相同冻结输入永远得到相同快照号与相同文件。
 
+布点规划（山区自动雨量站采购建议）是独立的离线命令，不影响上述评分/遥测路径：
+
+```bash
+python3 scripts/planning/run_planning_demo.py   # 生成全部样例建议并独立穷举核对
+```
+
+详见文末「山区自动雨量站布点规划」。
+
 ## 输入
 
 | 文件 | 说明 |
@@ -152,12 +160,15 @@ grid_intervals.csv`（成员、插值权重）与 `obs_selected.csv`（观测版
 
 ```
 pipeline/      生产管线（config/io_forecast/io_obs/accum/interpolate/scores/snapshot/runner）
+               + planning.py（离线布点规划，独立于评分/遥测路径）
 telemetry/     雨量站遥测（frame 编解码 / protocol 校验 / store SQLite / server TCP / gateway 模拟 / export）
 reference/     独立 NumPy 参考实现（与生产零代码共享）
 scripts/       数据生成、管线入口、参考核对入口、故障复现、遥测服务与导出
+               + planning/（布点命令、独立穷举核对、一键复现、大样例生成）
 tests/         可手算验证、冻结测试、观测修订测试、缺测有效性回归、遥测协议/存储/导出/TCP 联调
-configs/       分析配置（含冻结截止时间）
-data/          本地合成输入（脚本生成）
+               + planning/（布点规划断言，selftest 亦可在无 pytest 时运行）
+configs/       分析配置（含冻结截止时间）+ planning/（布点样例配置）
+data/          本地合成输入（脚本生成）+ planning/（已有站、候选点、采样点样例）
 outputs/       版本化评分输出（脚本生成）
 ```
 
@@ -259,3 +270,118 @@ seal 两个覆盖重叠的批次；以及 0.2 mm 翻斗、跨 03:00Z 的脉冲�
 导出时 `--issued-time` 必须不晚于该截点，否则导出的行会被冻结分析整体排除；
 `scripts/check_telemetry_export.py configs/demo_analysis.json <obs.csv>` 检查
 表头、版本、站点登记、三小时端点与签发时间。
+
+## 山区自动雨量站布点规划（离线采购建议）
+
+水文组要在山区补建自动雨量站，预算只够买一部分设备。本命令从候选建设点中
+挑出不超过预算的一组，使重点河段采样点获得尽可能多的**独立**雨量来源，并逐点
+给出覆盖理由。它只读自己的三张表和配置，**不修改**预报评分、遥测接收或观测
+数据路径，也不写任何既有 `outputs/<name>_<snapshot>/` 目录。
+
+```bash
+# 一条命令：从新鲜输入生成主样例建议，并用独立穷举核对器验证
+python3 scripts/planning/run_planning_demo.py
+
+# 单跑主样例（CSV 输入、预算 18、半径 50 km、必选 R1、禁选 F）
+python3 scripts/planning/run_gauge_plan.py --config configs/planning/demo_plan.json --verbose
+
+# 查看逐点理由
+cat outputs/planning_demo/purchase_recommendation.csv
+cat outputs/planning_demo/sample_coverage.csv
+cat outputs/planning_demo/unselected_improvements.csv
+cat outputs/planning_demo/plan_summary.json
+```
+
+主样例结论：在 18 的预算下选 `G3`、`Q`、`R1`（含必选 R1），花费正好 18；
+至少一个来源的采样点权重从 30 提升到 53，至少两个来源的权重保持 4（本预算层
+先饱和覆盖再考虑冗余）。禁选的 `F` 即使只花 1 且能改善蓝河三点也不买。
+`L1/L2/L3` 仍无来源：最近的现有站 S1 距 61.7 km，大于 50 km 半径，文件里写明
+距离和原因。
+
+### 输入（CSV 或 JSON，二选一）
+
+| 表 | 必填字段 | 可选字段 | 说明 |
+|---|---|---|---|
+| 现有站 `existing_stations` | `station_id,lat,lon` | `region,weight` | 已建站，作为既有来源，**不消耗本次预算** |
+| 候选点 `candidates` | `candidate_id,lat,lon,cost` | `required,forbidden,name` | 可施工位置与一次性采购成本；`cost >= 0` |
+| 采样点 `samples` | `sample_id,lat,lon,weight` | `reach` | 重点河段采样点；`weight > 0` |
+
+JSON 可以是对象列表，也可以是带表名键的对象（如 `{"candidates": [...]}`）。
+字段说明也可直接打印：`python3 scripts/planning/run_gauge_plan.py --fields`。
+
+约束与判定：
+
+* 坐标必须有限，`lat ∈ [-90, 90]`，`lon ∈ [-180, 180]`；各表 key 唯一，候选 key
+  不得与现有站重复，两个候选不得有完全相同的坐标；候选成本非负、采样权重为正。
+* 距离 = Haversine 球面距离（地球半径 6371.0 km）；**距离 ≤ 半径**才算可服务。
+* 一个采样点的来源数 = 可服务它的互不相同的站点数（现有站 + 所选新站）；一个
+  新站只算一个来源，不能被重复选中，也不能对同一点计两次。
+* 恰好 1 个来源 = 一般覆盖（single）；≥2 个来源 = 冗余覆盖（redundant）。
+* 必选点即使成本超过预算也**不会被悄悄取消**：报告预算冲突（退出码 3），不写
+  采购建议；同一候选同时必选和禁选、未知必选/禁选 key 都直接拒绝（退出码 2）。
+  所有非法记录在**求解前**逐条列出（表名、文件、行号、key）。
+
+### 优化目标（四层字典序，非加权魔法分数）
+
+1. 最大化「至少 1 个来源」的采样点**总权重**；
+2. 再最大化「至少 2 个来源」的采样点**总权重**；
+3. 再最小化所选新站的**采购花费**（预算/成本以 `Decimal` 精确比较，恰好用满 与
+   差一分超预算不会因二进制浮点误判）；
+4. 完全同分时按**候选 key 升序**稳定选择：两方案在最小不同 key 处，包含该 key
+   的方案胜出，因此结果与输入行序无关。
+
+**算法（精确，非贪心）**：按「共同服务某采样点」把可选候选划分成互不重叠的
+覆盖分量；每个分量用状态 DP 精确枚举（状态为已覆盖一次/两次掩码，同掩码只留
+最便宜方案，同价用 key 位向量作稳定平局解），得到每个分量在各花费档位的最优
+解；再用按总花费的小背包精确合并各分量，最后按四层目标取全局最优。最坏复杂度
+为各分量 `O(m_c · 3^{s_c})` 之和（`m_c` 该分量候选数、`s_c` 该分量服务采样数），
+等价于枚举全部 `2^n` 施工组合但会合并覆盖签名；`plan_summary.json` 的
+`algorithm` 段记录实际分量大小与状态数。
+
+> 为什么不能贪心：一个位置可能同时改善多个相邻河段；另一个位置补足当前只有单一
+> 来源的关键区域。示例 `data/planning/examples/greedy_trap/`：预算 12 时
+> 「就近先选」会选 `Guide`（权重 6）而买不起 `Hero`，精确解选 `Hero`（权重 10）。
+> 示例 `redundancy/`：高权重河段 `H`（100）必须先拿到**第二座**站才算冗余，
+> 与普通河段的冗余分开比较。
+
+### 输出（每次重跑覆盖自己的指定文件，原子替换）
+
+| 文件 | 内容 |
+|---|---|
+| `plan_summary.json` | 结论、所选 key、总花费/必选/可选/余额、四层目标前后值、覆盖前后汇总、未覆盖与单来源清单（含原因）、每个未选候选的边际改善、算法与实际状态数 |
+| `purchase_recommendation.csv` | 每个候选一行：`decision`（`chosen_required`/`chosen_optional`/`not_chosen`/`forbidden`）、理由、服务采样、加入后会改善的点 |
+| `sample_coverage.csv` | 每个采样点一行：建设前后来源数与状态、所有现有站/所选新站到该点的距离和是否在半径内（JSON）、未覆盖原因、改善类型 |
+| `unselected_improvements.csv` | 每个未选候选若加入会**新覆盖**或**升级为冗余**的采样点（含权重与是否在剩余预算内） |
+| `plan_validation.json` | 已通过的输入检查项与源文件路径 |
+
+没有任何来源的采样点会写明确原因（如「nearest source S1 is 61.683002 km away
+(> radius 50 km)」），不会用零分或空建议伪装成功。
+
+### 样例与独立验证
+
+* `configs/planning/demo_plan.json` → `outputs/planning_demo/`：主样例（CSV）。
+* `configs/planning/json_plan.json` → `outputs/planning_json/`：同一机制的 JSON 输入。
+* `configs/planning/large_plan.json` → `outputs/planning_large/`：96 个候选、384 个
+  采样点、6 个覆盖分量的较大实例（约 0.2 s；逐分量穷举核对约 2 min）。
+* `data/planning/examples/{greedy_trap,redundancy,old_station,tie,conflict,budget_conflict}/`：
+  分别演示贪心陷阱、高权重冗余需要第二座站、旧站已覆盖不重复花钱、同分稳定、
+  必选/禁选冲突、必选超预算冲突。
+
+独立核对（与本模块**零共享优化代码**）：`scripts/planning/verify_plan.py` 自己重算
+Haversine 并枚举全部（小实例）或逐分量全部（大实例）可行子集，比对所选 key、
+四层目标值以及 `sample_coverage.csv` 里每个来源的计数/距离/半径判定；不匹配即
+非零退出。
+
+```bash
+python3 scripts/planning/verify_plan.py --config configs/planning/demo_plan.json \
+    --summary outputs/planning_demo/plan_summary.json --coverage outputs/planning_demo/sample_coverage.csv
+python3 scripts/planning/verify_plan.py --config configs/planning/large_plan.json \
+    --component-exhaustive --summary outputs/planning_large/plan_summary.json
+python3 scripts/planning/selftest_planning.py     # 18 项断言（无 pytest 也可跑）
+```
+
+测试覆盖：半径边界含等号、DP 与独立穷举在多组预算/半径/随机小实例上一致、
+贪心陷阱、第二座站冗余、预算恰好用满与差一点超预算（含 0.1+0.2=0.3 的十进制
+精确比较）、旧站免费且不重复购买、单站只计一个来源、必选/禁选/未知 key/预算
+冲突、同分稳定与行序无关、非法坐标/负预算/非法半径/重复 key 在求解前报错、
+主样例与 JSON/大样例输出与穷举核对一致。

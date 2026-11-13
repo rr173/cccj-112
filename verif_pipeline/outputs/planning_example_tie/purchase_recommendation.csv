@@ -1,0 +1,3 @@
+candidate_id,name,lat,lon,cost,decision,selected,reason,serves_samples,n_serves_samples,contribution_samples,improves_if_added,newly_covered_weight,newly_redundant_weight,fits_remaining_budget
+T1,tie site one,0,0.02,4,chosen_optional,yes,chosen: optimiser selected this site; contribution in this plan +5 covered / +0 redundant weight,A,1,A:contribution_covered,,5,0,
+T2,tie site two,0,0.08,4,not_chosen,no,not chosen: cost 4 exceeds the remaining budget 0,B,1,,B:newly_covered,5,0,no

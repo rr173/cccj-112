@@ -1,0 +1,3 @@
+candidate_id,lat,lon,cost,required,forbidden,name
+Rq,0.000,0.010,30,1,0,required site too expensive for the budget
+Opt,0.000,0.020,5,0,0,optional site

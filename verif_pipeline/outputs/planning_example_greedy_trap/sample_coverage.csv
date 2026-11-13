@@ -1,0 +1,3 @@
+sample_id,reach,lat,lon,weight,status_before,status_after,sources_before,sources_after,sources_before_json,sources_after_json,coverage_gap_reason,gain_type
+H,high-value reach,0,1,10,uncovered,single,0,1,[],"[{""counted"":true,""distance_km"":0.0,""in_radius"":true,""kind"":""new"",""source_id"":""Hero""}]",single source only,newly_covered
+L,low-value reach (key sorts first),0,0,6,uncovered,uncovered,0,0,[],"[{""counted"":false,""distance_km"":111.194927,""in_radius"":false,""kind"":""new"",""source_id"":""Hero""}]",nearest source Hero is 111.194927 km away (> radius 30 km),still_uncovered

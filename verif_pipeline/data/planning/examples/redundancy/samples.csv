@@ -1,0 +1,5 @@
+sample_id,lat,lon,weight,reach
+H,0.000,0.100,100,high-value reach
+N1,0.000,-0.300,2,ordinary reach 1
+N2,0.000,-0.320,2,ordinary reach 2
+N3,0.000,-0.340,2,ordinary reach 3

@@ -1,0 +1,3 @@
+candidate_id,lat,lon,cost,required,forbidden,name
+Guide,0.000,0.000,11,0,0,nearest site to the first uncovered sample
+Hero,0.000,1.000,12,0,0,high-value reach site

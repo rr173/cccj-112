@@ -1,0 +1,13 @@
+candidate_id,name,lat,lon,cost,decision,selected,reason,serves_samples,n_serves_samples,contribution_samples,improves_if_added,newly_covered_weight,newly_redundant_weight,fits_remaining_budget
+F,Spur access,40.3,116.6,1,forbidden,no,not chosen: marked forbidden,A | D | L1 | L2 | L3 | UF,6,,A:newly_redundant | D:newly_redundant | L1:newly_covered | L2:newly_covered | L3:newly_covered | UF:newly_redundant,8,21,no
+G1,Blue river confluence,40.35,117,10,not_chosen,no,not chosen: cost 10 exceeds the remaining budget 0,L1 | L2 | L3 | UF,4,,L1:newly_covered | L2:newly_covered | L3:newly_covered | UF:newly_redundant,8,6,no
+G2,Remote basin,41,115.6,20,not_chosen,no,not chosen: cost 20 exceeds the remaining budget 0,H2,1,,H2:newly_redundant,0,6,no
+G3,Remote basin slope,41,115.7,6,chosen_optional,yes,chosen: optimiser selected this site; contribution in this plan +6 covered / +0 redundant weight,H2,1,H2:contribution_covered,,6,0,
+K,Blue river north,40.5,116.8,11,not_chosen,no,not chosen: cost 11 exceeds the remaining budget 0,A | G | L1 | L2 | L3 | UF,6,,A:newly_redundant | G:newly_redundant | L1:newly_covered | L2:newly_covered | L3:newly_covered | UF:newly_redundant,8,16,no
+M,Lower main stem spur,40.1,116.3,5,not_chosen,no,not chosen: cost 5 exceeds the remaining budget 0,A | D | UF,3,,A:newly_redundant | D:newly_redundant | UF:newly_redundant,0,21,no
+P,East tributary spur,40.9,116.98,6,not_chosen,no,not chosen: cost 6 exceeds the remaining budget 0,B | G,2,,G:newly_redundant,0,5,no
+Q,Headwater valley basin,38,113,6,chosen_optional,yes,chosen: optimiser selected this site; contribution in this plan +8 covered / +0 redundant weight,T1 | T2,2,T1:contribution_covered | T2:contribution_covered,,8,0,
+R1,Gorge ridge primary,40.7,116.2,6,chosen_required,yes,chosen: required site; contribution in this plan +9 covered / +0 redundant weight,H,1,H:contribution_covered,,9,0,
+R2,Gorge ridge backup,40.71,116.21,5,not_chosen,no,not chosen: cost 5 exceeds the remaining budget 0,H,1,,H:newly_redundant,0,9,no
+X,Hill saddle,40.6,116.4,8,not_chosen,no,not chosen: cost 8 exceeds the remaining budget 0,A | H | UF,3,,A:newly_redundant | H:newly_redundant | UF:newly_redundant,0,20,no
+Z,North tributary ridge,41,117.5,5,not_chosen,no,not chosen: cost 5 exceeds the remaining budget 0,B | G,2,,G:newly_redundant,0,5,no

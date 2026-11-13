@@ -1,0 +1,8 @@
+candidate_id,name,lat,lon,cost,decision,selected,reason,serves_samples,n_serves_samples,contribution_samples,improves_if_added,newly_covered_weight,newly_redundant_weight,fits_remaining_budget
+F,,40.3,116.6,1,forbidden,no,not chosen: marked forbidden,A | D | L1 | L2 | L3,5,,D:newly_redundant | L1:newly_redundant | L2:newly_redundant | L3:newly_redundant,0,18,yes
+G1,,40.35,117,10,not_chosen,no,not chosen: cost 10 exceeds the remaining budget 1,L1 | L2 | L3,3,,L1:newly_redundant | L2:newly_redundant | L3:newly_redundant,0,8,no
+G3,,41,115.7,6,not_chosen,no,not chosen: cost 6 exceeds the remaining budget 1,H2,1,,H2:newly_covered,6,0,no
+K,,40.5,116.8,11,chosen_optional,yes,chosen: optimiser selected this site; contribution in this plan +8 covered / +5 redundant weight,A | L1 | L2 | L3,4,A:contribution_redundant | L1:contribution_covered | L2:contribution_covered | L3:contribution_covered,,8,5,
+M,,40.1,116.3,5,not_chosen,no,not chosen: cost 5 exceeds the remaining budget 1,A | D,2,,D:newly_redundant,0,10,no
+R1,,40.7,116.2,6,chosen_required,yes,chosen: required site; contribution in this plan +9 covered / +0 redundant weight,H,1,H:contribution_covered,,9,0,
+X,,40.6,116.4,8,not_chosen,no,not chosen: cost 8 exceeds the remaining budget 1,A | H,2,,H:newly_redundant,0,9,no

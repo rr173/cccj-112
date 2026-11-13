@@ -1,0 +1,13 @@
+candidate_id,lat,lon,cost,required,forbidden,name
+G1,40.35,117.00,10,0,0,Blue river confluence
+K,40.50,116.80,11,0,0,Blue river north
+X,40.60,116.40,8,0,0,Hill saddle
+R1,40.70,116.20,6,1,0,Gorge ridge primary
+R2,40.71,116.21,5,0,0,Gorge ridge backup
+G2,41.00,115.60,20,0,0,Remote basin
+G3,41.00,115.70,6,0,0,Remote basin slope
+Z,41.00,117.50,5,0,0,North tributary ridge
+M,40.10,116.30,5,0,0,Lower main stem spur
+P,40.90,116.98,6,0,0,East tributary spur
+Q,38.00,113.00,6,0,0,Headwater valley basin
+F,40.30,116.60,1,0,1,Spur access

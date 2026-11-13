@@ -1,0 +1,5 @@
+station_id,lat,lon,region,weight
+S1,40.2,116.3,North,2.0
+S2,41.1,117.2,North,1.0
+S3,39.8,115.6,South,1.5
+S4,40.9,117.8,South,1.0

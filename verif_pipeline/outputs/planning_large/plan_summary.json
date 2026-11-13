@@ -1,0 +1,1061 @@
+{
+  "algorithm": {
+    "constructed_subsets_enumerated_equivalently": "19807040628566084398385987584",
+    "dp_states_created": 39,
+    "dp_states_final": 39,
+    "method": "exact: optional candidates split into coverage-independent components; each component solved by a signature dynamic program (covered-once / covered-twice masks, one cheapest plan per signature, key-bit tie-break), then components combined by an exact knapsack over total purchase cost",
+    "n_candidates": 96,
+    "n_optional_candidates": 94,
+    "parts": {
+      "component_sizes": [
+        16,
+        15,
+        16,
+        16,
+        15,
+        16
+      ],
+      "component_state_counts": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "n_components": 6
+    },
+    "worst_case_complexity": "sum over components of O(m_c * S_c), S_c <= min(2^m_c, 3^s_c) distinct coverage signatures (m_c candidates, s_c served samples in component c); the combine is O(n_cost_levels^2). Equivalent to enumerating 2^n_optional subsets, but merges identical coverage signatures and splits on independent components"
+  },
+  "coverage_summary": {
+    "samples_after": {
+      "redundant": 384,
+      "single": 0,
+      "uncovered": 0
+    },
+    "samples_before": {
+      "redundant": 0,
+      "single": 148,
+      "uncovered": 236
+    },
+    "single_source_after": [],
+    "total_sample_weight": "1416",
+    "uncovered_after": [],
+    "weight_with_at_least_one_source": {
+      "after": "1416",
+      "before": "536"
+    },
+    "weight_with_at_least_two_sources": {
+      "after": "1416",
+      "before": "0"
+    }
+  },
+  "objectives": [
+    {
+      "after": "1416",
+      "before": "536",
+      "direction": "maximise",
+      "layer": 1,
+      "name": "total weight of samples with >= 1 source"
+    },
+    {
+      "after": "1416",
+      "before": "0",
+      "direction": "maximise",
+      "layer": 2,
+      "name": "total weight of samples with >= 2 distinct sources"
+    },
+    {
+      "direction": "minimise",
+      "layer": 3,
+      "name": "purchase cost of chosen new sites",
+      "value": "42"
+    },
+    {
+      "direction": "stable key order",
+      "layer": 4,
+      "name": "candidate key ordering tie-break",
+      "value": "B00000 | B10000 | B10200 | B20103 | B20200 | B30102 | B40101 | B40302 | B50100 | B50301"
+    }
+  ],
+  "output_dir": "/workspace/verif_pipeline/outputs/planning_large",
+  "parameters": {
+    "budget": "240",
+    "forbidden_candidates": [
+      "B40203"
+    ],
+    "radius_km": "25",
+    "required_candidates": [
+      "B10200"
+    ]
+  },
+  "purchase": {
+    "budget_remaining": "198",
+    "chosen_candidates": [
+      "B00000",
+      "B10000",
+      "B10200",
+      "B20103",
+      "B20200",
+      "B30102",
+      "B40101",
+      "B40302",
+      "B50100",
+      "B50301"
+    ],
+    "cost_optional": "38",
+    "cost_required": "4",
+    "cost_total": "42",
+    "existing_stations_are_free": true,
+    "n_chosen": 10
+  },
+  "unselected_improvements": [
+    {
+      "candidate_id": "B00001",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00002",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00003",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00100",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00101",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00102",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00103",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00200",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00201",
+      "cost": "4",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00202",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00203",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00300",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00301",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00302",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B00303",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10001",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10002",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10003",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10100",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10101",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10102",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10103",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10201",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10202",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10203",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10300",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10301",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10302",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B10303",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20000",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20001",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20002",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20003",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20100",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20101",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20102",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20201",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20202",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20203",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20300",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20301",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20302",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B20303",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30000",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30001",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30002",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30003",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30100",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30101",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30103",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30200",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30201",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30202",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30203",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30300",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30301",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30302",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B30303",
+      "cost": "4",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40000",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40001",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40002",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40003",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40100",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40102",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40103",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40200",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40201",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40202",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40203",
+      "cost": "10",
+      "decision": "forbidden",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: marked forbidden"
+    },
+    {
+      "candidate_id": "B40300",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40301",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B40303",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50000",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50001",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50002",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50003",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50101",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50102",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50103",
+      "cost": "7",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50200",
+      "cost": "8",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50201",
+      "cost": "9",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50202",
+      "cost": "10",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50203",
+      "cost": "11",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50300",
+      "cost": "12",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50302",
+      "cost": "5",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    },
+    {
+      "candidate_id": "B50303",
+      "cost": "6",
+      "decision": "not_chosen",
+      "fits_remaining_budget": true,
+      "newly_covered": [],
+      "newly_covered_weight": "0",
+      "newly_redundant": [],
+      "newly_redundant_weight": "0",
+      "reason": "not chosen: adds no sample to the recommended plan"
+    }
+  ],
+  "verdict": "ok"
+}

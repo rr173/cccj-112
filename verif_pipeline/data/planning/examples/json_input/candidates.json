@@ -1,0 +1,9 @@
+[
+  {"candidate_id": "G1", "lat": 40.35, "lon": 117.00, "cost": "10", "required": false, "forbidden": false},
+  {"candidate_id": "K", "lat": 40.50, "lon": 116.80, "cost": "11", "required": false, "forbidden": false},
+  {"candidate_id": "X", "lat": 40.60, "lon": 116.40, "cost": "8", "required": false, "forbidden": false},
+  {"candidate_id": "R1", "lat": 40.70, "lon": 116.20, "cost": "6", "required": true, "forbidden": false},
+  {"candidate_id": "G3", "lat": 41.00, "lon": 115.70, "cost": "6", "required": false, "forbidden": false},
+  {"candidate_id": "M", "lat": 40.10, "lon": 116.30, "cost": "5", "required": false, "forbidden": false},
+  {"candidate_id": "F", "lat": 40.30, "lon": 116.60, "cost": "1", "required": false, "forbidden": true}
+]

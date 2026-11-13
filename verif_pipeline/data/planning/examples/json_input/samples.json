@@ -1,0 +1,11 @@
+{
+  "samples": [
+    {"sample_id": "A", "lat": 40.25, "lon": 116.35, "weight": 5, "reach": "upper reach"},
+    {"sample_id": "D", "lat": 40.05, "lon": 116.25, "weight": 10, "reach": "main stem"},
+    {"sample_id": "H", "lat": 40.70, "lon": 116.20, "weight": 9, "reach": "gorge"},
+    {"sample_id": "H2", "lat": 41.00, "lon": 115.60, "weight": 6, "reach": "high basin"},
+    {"sample_id": "L1", "lat": 40.35, "lon": 117.00, "weight": 3, "reach": "blue upper"},
+    {"sample_id": "L2", "lat": 40.40, "lon": 117.05, "weight": 3, "reach": "blue middle"},
+    {"sample_id": "L3", "lat": 40.30, "lon": 117.10, "weight": 2, "reach": "blue lower"}
+  ]
+}

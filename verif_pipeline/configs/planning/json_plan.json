@@ -1,0 +1,10 @@
+{
+  "samples": "../../data/planning/examples/json_input/samples.json",
+  "candidates": "../../data/planning/examples/json_input/candidates.json",
+  "existing_stations": "../../data/planning/examples/json_input/stations.json",
+  "budget": "18",
+  "radius_km": "50",
+  "required_candidates": [],
+  "forbidden_candidates": [],
+  "output_dir": "../../outputs/planning_json"
+}

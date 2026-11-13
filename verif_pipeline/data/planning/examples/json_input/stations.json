@@ -1,0 +1,6 @@
+[
+  {"station_id": "S1", "lat": 40.2, "lon": 116.3, "region": "North", "weight": 2.0},
+  {"station_id": "S2", "lat": 41.1, "lon": 117.2, "region": "North", "weight": 1.0},
+  {"station_id": "S3", "lat": 39.8, "lon": 115.6, "region": "South", "weight": 1.5},
+  {"station_id": "S4", "lat": 40.9, "lon": 117.8, "region": "South", "weight": 1.0}
+]

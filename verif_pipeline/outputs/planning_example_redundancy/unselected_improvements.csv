@@ -1,0 +1,4 @@
+candidate_id,sample_id,effect,sample_weight,candidate_cost,fits_remaining_budget
+B,N1,newly_redundant,2,8,no
+B,N2,newly_redundant,2,8,no
+B,N3,newly_redundant,2,8,no

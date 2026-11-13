@@ -1,0 +1,10 @@
+{
+  "samples": "../../data/planning/examples/large/samples.csv",
+  "candidates": "../../data/planning/examples/large/candidates.csv",
+  "existing_stations": "../../data/planning/examples/large/stations.csv",
+  "budget": "240",
+  "radius_km": "25",
+  "required_candidates": ["B10200"],
+  "forbidden_candidates": ["B40203"],
+  "output_dir": "../../outputs/planning_large"
+}

@@ -1,0 +1,24 @@
+{
+  "checked": {
+    "candidates": 2,
+    "existing_stations": 2,
+    "samples": 2
+  },
+  "rules": {
+    "budget": ">= 0",
+    "candidate_coordinates": "distinct between candidates",
+    "candidate_cost": ">= 0",
+    "coordinates": "finite; lat in [-90, 90]; lon in [-180, 180]",
+    "keys": "unique within each table; candidate keys disjoint from station keys",
+    "radius_km": "> 0",
+    "required_forbidden": "disjoint, all named candidates exist, required cost <= budget",
+    "sample_weight": "> 0"
+  },
+  "source_files": {
+    "candidates": "/workspace/verif_pipeline/data/planning/examples/old_station/candidates.csv",
+    "existing_stations": "/workspace/verif_pipeline/data/planning/examples/old_station/stations.csv",
+    "samples": "/workspace/verif_pipeline/data/planning/examples/old_station/samples.csv"
+  },
+  "verdict": "ok",
+  "warnings": []
+}

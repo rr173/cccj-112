@@ -1,0 +1,3 @@
+sample_id,reach,lat,lon,weight,status_before,status_after,sources_before,sources_after,sources_before_json,sources_after_json,coverage_gap_reason,gain_type
+A,reach A,0,0,5,uncovered,single,0,1,[],"[{""counted"":true,""distance_km"":2.223899,""in_radius"":true,""kind"":""new"",""source_id"":""T1""}]",single source only,newly_covered
+B,reach B,0,0.1,5,uncovered,uncovered,0,0,[],"[{""counted"":false,""distance_km"":8.895594,""in_radius"":false,""kind"":""new"",""source_id"":""T1""}]",nearest source T1 is 8.895594 km away (> radius 6 km),still_uncovered
