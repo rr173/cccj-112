@@ -1,0 +1,7 @@
+{"instrument_id":"WQ-01|A","batch_no":1001,"obs":"rain_mm","value":12.5,"meta":{"station":"S1","flag":true,"big":9999999999999999999999}}
+{"instrument_id":"WQ-01|A","batch_no":1001,"obs":"wind_ms","value":3.2,"meta":{"station":"S1"}}
+{"instrument_id":"WQ-02","batch_no":7,"obs":"temp_c","value":21.0,"note":"delimiter-free id"}
+{"instrument_id":"WQ-02","batch_no":7,"obs":"temp_c","value":21.0,"note":"exact duplicate payload, independent row"}
+{"instrument_id":"WQ-03","batch_no":null,"obs":"humidity","value":80,"note":"null key component never matches"}
+{"instrument_id":"WQ-04","obs":"pressure","value":1013,"note":"missing key field never matches"}
+{"instrument_id":"WQ-05","batch_no":9,"obs":"radiation","value":400,"note":"unmatched left kept once with null right"}

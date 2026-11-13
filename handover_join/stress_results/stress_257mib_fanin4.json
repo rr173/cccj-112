@@ -1,0 +1,34 @@
+{
+  "input_left_rows": 307,
+  "input_right_rows": 14,
+  "input_total_bytes": 270009473,
+  "input_total_mib": 257.5,
+  "hot_left_rows": 300,
+  "hot_right_rows": 8,
+  "row_bytes": 900000,
+  "expected_output_pairs": 2407,
+  "output_bytes": 2160406945,
+  "output_mib": 2060.32,
+  "fan_in": 4,
+  "chunk_size": 100000,
+  "chunk_bytes": 16777216,
+  "pair_chunk_size": 100000,
+  "pair_chunk_bytes": 16777216,
+  "merge_waves": {
+    "left": 2,
+    "right": 0,
+    "pair": 4
+  },
+  "spilled_runs": {
+    "left": 16,
+    "right": 1
+  },
+  "peak_rss_mib_measured": 31.34,
+  "rss_limit_mib": 96,
+  "rss_within_limit": true,
+  "wall_seconds": 57.66,
+  "validation": {
+    "output_lines": 2407,
+    "unmatched_left_rows": 7
+  }
+}

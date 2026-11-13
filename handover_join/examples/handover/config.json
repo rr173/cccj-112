@@ -1,0 +1,5 @@
+{
+  "left_keys": ["instrument_id", "batch_no"],
+  "right_keys": ["reg_instrument", "reg_batch"],
+  "key_types": ["string", "integer"]
+}

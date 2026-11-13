@@ -1,0 +1,6 @@
+{"reg_instrument":"WQ-01|A","reg_batch":1001,"registry":"pending-verification-1","owner":"team-A"}
+{"reg_instrument":"WQ-01|A","reg_batch":1001,"registry":"pending-verification-2","owner":"team-B","history":[1,2,{"x":null}]}
+{"reg_instrument":"WQ-02","reg_batch":7,"registry":"verified-7","owner":"team-C"}
+{"reg_instrument":"WQ-02|X","reg_batch":7,"registry":"lookalike-id-must-not-collide","owner":null}
+{"reg_instrument":"WQ-03","reg_batch":7,"registry":"null-side-registration","owner":"team-D"}
+{"reg_instrument":"WQ-99","reg_batch":1,"registry":"right-only-row-not-emitted"}
