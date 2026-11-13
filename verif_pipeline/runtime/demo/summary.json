@@ -1,0 +1,325 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "begin split across many reads is ACKed",
+      "ok": true,
+      "detail": "{\"ack\": true, \"batch_id\": \"s1-frame\", \"batch_status\": \"collecting\", \"duplicate\": false, \"message_type\": \"begin\", \"schema\": \"telemetry-reply/1\", \"station_id\": \"S1\", \"status\": \"ACK\"}"
+    },
+    {
+      "name": "half a frame is never treated as a full message",
+      "ok": true,
+      "detail": "no reply, 0 tips while the tail is incomplete"
+    },
+    {
+      "name": "completing the half frame ACKs seq 0",
+      "ok": true,
+      "detail": "{\"ack\": true, \"batch_id\": \"s1-frame\", \"batch_status\": \"collecting\", \"duplicate\": false, \"message_type\": \"tip\", \"schema\": \"telemetry-reply/1\", \"seq\": 0, \"station_id\": \"S1\", \"status\": \"ACK\"}"
+    },
+    {
+      "name": "seven glued frames ACKed despite garbage / bad CRC / bad length",
+      "ok": true,
+      "detail": "7 ACKs"
+    },
+    {
+      "name": "out-of-order tips accepted and the duplicate detected",
+      "ok": true,
+      "detail": "duplicates=[2]"
+    },
+    {
+      "name": "bad frames created no rows; decoder resynced",
+      "ok": true,
+      "detail": "7 distinct tips stored"
+    },
+    {
+      "name": "gateway received all replies with nothing left over",
+      "ok": true,
+      "detail": "pending=0"
+    },
+    {
+      "name": "server decoder rejected bad crc / invalid length / garbage",
+      "ok": true,
+      "detail": "[\"bad_crc\", \"garbage\", \"invalid_length\"]"
+    },
+    {
+      "name": "identical begin resend -> ACK duplicate, no new row",
+      "ok": true,
+      "detail": "{\"ack\": true, \"duplicate\": true}"
+    },
+    {
+      "name": "seal after complete upload -> accepted",
+      "ok": true,
+      "detail": "{\"count\": 7, \"end_ms\": 1770184800000, \"sha256\": \"ce77498a69218c78155e1279ddb0a5e9c3e5bd122d47bc9f12d2da34211af48e\", \"start_ms\": 1770163200000, \"tip_mm\": \"0.2\"}"
+    },
+    {
+      "name": "repeated seal -> ACK, exactly one accepted row",
+      "ok": true,
+      "detail": "{\"ack\": true, \"duplicate\": true}"
+    },
+    {
+      "name": "same identity, different begin content -> NACK identity_conflict",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "first begin content kept",
+      "ok": true,
+      "detail": "count=7"
+    },
+    {
+      "name": "seal with one missing seq -> NACK incomplete",
+      "ok": true,
+      "detail": "{\"count\": 5, \"missing_ranges\": [\"2\"], \"missing_seq_count\": 1, \"received_count\": 4}"
+    },
+    {
+      "name": "missing range reported exactly",
+      "ok": true,
+      "detail": "[\"2\"]"
+    },
+    {
+      "name": "incomplete batch is not usable for analysis",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "resend of the missing seq -> seal ACK",
+      "ok": true,
+      "detail": "{\"accepted\": {\"count\": 5, \"end_ms\": 1770087600000, \"sha256\": \"d36585e3c5509ea16d4484bb7b2c9bf8e03f4e2874c575057a7de1dd2cb7487d\", \"start_ms\": 1770076800000, \"tip_mm\": \"0.2\"}, \"ack\": true, \"batch_id\": \"s2-gap\", \"batch_status\": \"accepted\", \"duplicate\": false, \"message_type\": \"seal\", \"schema\": \"telemetry-reply/1\", \"station_id\": \"S2\", \"status\": \"ACK\"}"
+    },
+    {
+      "name": "all five tips stored exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "tip before begin -> NACK unknown_batch, no batch row",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"unknown_batch\"}"
+    },
+    {
+      "name": "digest mismatch -> NACK, batch stays unaccepted",
+      "ok": true,
+      "detail": "{\"computed\": \"8f5883c7ffbe61cc422fd0f0ff3c7ddd1e87df5aa34d7418fcbe2b1800b72cfd\", \"declared\": \"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\"}"
+    },
+    {
+      "name": "rejected: invalid_message",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"invalid_message\"}"
+    },
+    {
+      "name": "rejected: invalid_message",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"invalid_message\"}"
+    },
+    {
+      "name": "rejected: invalid_message",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"invalid_message\"}"
+    },
+    {
+      "name": "rejected: time_outside_interval",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"time_outside_interval\"}"
+    },
+    {
+      "name": "rejected: seq_out_of_range",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"seq_out_of_range\"}"
+    },
+    {
+      "name": "rejected: batch_already_accepted",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"batch_already_accepted\"}"
+    },
+    {
+      "name": "rejected: unknown_station",
+      "ok": true,
+      "detail": "{\"ack\": false, \"reason\": \"unknown_station\"}"
+    },
+    {
+      "name": "connection still usable after NACKs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "exactly one concurrent writer wins",
+      "ok": true,
+      "detail": "{\"a\": \"NACK\", \"b\": \"ACK\"}"
+    },
+    {
+      "name": "loser gets tip_conflict",
+      "ok": true,
+      "detail": "{\"received\": {\"time_ms\": 1770271800000, \"tips\": 11}, \"seq\": 0, \"stored\": {\"time_ms\": 1770271800000, \"tips\": 12}}"
+    },
+    {
+      "name": "first committed content kept, exactly one row",
+      "ok": true,
+      "detail": "[{\"seq\": 0, \"tips\": 12}]"
+    },
+    {
+      "name": "resending the winning content is an ACK duplicate",
+      "ok": true,
+      "detail": "{\"ack\": true, \"duplicate\": true, \"reason\": null}"
+    },
+    {
+      "name": "exactly one overlapping batch accepted",
+      "ok": true,
+      "detail": "{\"b\": \"ACK\", \"a\": \"NACK\"}"
+    },
+    {
+      "name": "loser reports interval_conflict",
+      "ok": true,
+      "detail": "{\"overlapping_batches\": [{\"batch_id\": \"ovl-2\", \"end_ms\": 1770444000000, \"start_ms\": 1770429600000}]}"
+    },
+    {
+      "name": "one accepted row for the overlapping pair",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "adjacent intervals sharing an endpoint both accepted",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "server exited before the ACK was sent",
+      "ok": true,
+      "detail": "exit=77"
+    },
+    {
+      "name": "the committed tip is durably in SQLite after the crash",
+      "ok": true,
+      "detail": "tips seq 0 and 1"
+    },
+    {
+      "name": "the un-ACKed tip counts as received but the batch is not accepted",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "gateway resend after restart is fully ACKed",
+      "ok": true,
+      "detail": "5 replies"
+    },
+    {
+      "name": "no tip duplicated by the resend",
+      "ok": true,
+      "detail": "3 tips"
+    },
+    {
+      "name": "batch accepted exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "export writes exactly the expected observation rows",
+      "ok": true,
+      "detail": "[\"S1 2026-02-01T03:00:00Z\", \"S1 2026-02-01T06:00:00Z\", \"S2 2026-02-01T03:00:00Z\", \"S2 2026-02-01T06:00:00Z\", \"S3 2026-02-01T03:00:00Z\", \"S3 2026-02-01T06:00:00Z\", \"S4 2026-02-01T03:00:00Z\"]"
+    },
+    {
+      "name": "S1 03:00 = 1.2 mm",
+      "ok": true,
+      "detail": "1.2"
+    },
+    {
+      "name": "S1 06:00 = 2.6 mm",
+      "ok": true,
+      "detail": "2.6"
+    },
+    {
+      "name": "S2 03:00 = 1 mm",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "S2 06:00 = 1.4 mm",
+      "ok": true,
+      "detail": "1.4"
+    },
+    {
+      "name": "S3 03:00 = 0 mm",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "S3 06:00 = 0 mm",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "name": "S4 03:00 = 0.6 mm",
+      "ok": true,
+      "detail": "0.6"
+    },
+    {
+      "name": "pulse at exactly 03:00Z counted in 03-06, not 00-03",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "adjacent batches jointly prove completeness (S2)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "full coverage with no pulses is a real 0, not missing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "0.2 mm tips show no binary floating-point tail",
+      "ok": true,
+      "detail": "[\"0\", \"0.6\", \"1\", \"1.2\", \"1.4\", \"2.6\"]"
+    },
+    {
+      "name": "version is 1 and issued_time is the requested one",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "S4 06Z is not written (only unaccepted data there)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "S4 gap reported 03:00-06:00 as unaccepted_batch_only",
+      "ok": true,
+      "detail": "[{\"station_id\": \"S4\", \"valid_time\": \"2026-02-01T06:00:00Z\", \"missing_start\": \"2026-02-01T03:00:00Z\", \"missing_end\": \"2026-02-01T06:00:00Z\", \"reason\": \"unaccepted_batch_only\", \"pending_batch_ids\": \"s4-pending\"}]"
+    },
+    {
+      "name": "no gap is invented for fully covered stations",
+      "ok": true,
+      "detail": "[\"S4\"]"
+    },
+    {
+      "name": "re-running export rebuilds the same file (no append)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "gap sidecar exists next to the observation file",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "only the fully covered 00-03 bucket is exported",
+      "ok": true,
+      "detail": "[{\"station_id\": \"S9\", \"valid_time\": \"2026-02-01T03:00:00Z\", \"precip_mm\": \"0.2\", \"version\": 1, \"issued_time\": \"2026-02-02T00:00:00Z\"}]"
+    },
+    {
+      "name": "one-second hole reported as 03:00:00-03:00:01",
+      "ok": true,
+      "detail": "[{\"station_id\": \"S9\", \"valid_time\": \"2026-02-01T06:00:00Z\", \"missing_start\": \"2026-02-01T03:00:00Z\", \"missing_end\": \"2026-02-01T03:00:01Z\", \"reason\": \"partial_gap\", \"pending_batch_ids\": \"\"}]"
+    },
+    {
+      "name": "a one-second hole is NOT exported as 0 mm",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "db": "/workspace/verif_pipeline/runtime/demo/telemetry.sqlite3",
+  "journal": "/workspace/verif_pipeline/runtime/demo/gateway_journal.jsonl",
+  "log": "/workspace/verif_pipeline/runtime/demo/demo.log",
+  "export": "/workspace/verif_pipeline/runtime/demo/station_obs_telemetry.csv",
+  "workdir": "/workspace/verif_pipeline/runtime/demo"
+}

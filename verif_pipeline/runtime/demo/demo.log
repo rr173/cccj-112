@@ -1,0 +1,80 @@
+telemetry demo: db=/workspace/verif_pipeline/runtime/demo/telemetry.sqlite3 port=41771
+
+== scenario 1-4: framing, reordering, duplicates, bad frames ==
+  [PASS] begin split across many reads is ACKed  ({"ack": true, "batch_id": "s1-frame", "batch_status": "collecting", "duplicate": false, "message_type": "begin", "schema": "telemetry-reply/1", "station_id": "S1", "status": "ACK"})
+  [PASS] half a frame is never treated as a full message  (no reply, 0 tips while the tail is incomplete)
+  [PASS] completing the half frame ACKs seq 0  ({"ack": true, "batch_id": "s1-frame", "batch_status": "collecting", "duplicate": false, "message_type": "tip", "schema": "telemetry-reply/1", "seq": 0, "station_id": "S1", "status": "ACK"})
+  [PASS] seven glued frames ACKed despite garbage / bad CRC / bad length  (7 ACKs)
+  [PASS] out-of-order tips accepted and the duplicate detected  (duplicates=[2])
+  [PASS] bad frames created no rows; decoder resynced  (7 distinct tips stored)
+  [PASS] gateway received all replies with nothing left over  (pending=0)
+  [PASS] server decoder rejected bad crc / invalid length / garbage  (["bad_crc", "garbage", "invalid_length"])
+  [PASS] identical begin resend -> ACK duplicate, no new row  ({"ack": true, "duplicate": true})
+  [PASS] seal after complete upload -> accepted  ({"count": 7, "end_ms": 1770184800000, "sha256": "ce77498a69218c78155e1279ddb0a5e9c3e5bd122d47bc9f12d2da34211af48e", "start_ms": 1770163200000, "tip_mm": "0.2"})
+  [PASS] repeated seal -> ACK, exactly one accepted row  ({"ack": true, "duplicate": true})
+  [PASS] same identity, different begin content -> NACK identity_conflict
+  [PASS] first begin content kept  (count=7)
+
+== scenario 5-7: missing seq, orphan tip, digest mismatch ==
+  [PASS] seal with one missing seq -> NACK incomplete  ({"count": 5, "missing_ranges": ["2"], "missing_seq_count": 1, "received_count": 4})
+  [PASS] missing range reported exactly  (["2"])
+  [PASS] incomplete batch is not usable for analysis
+  [PASS] resend of the missing seq -> seal ACK  ({"accepted": {"count": 5, "end_ms": 1770087600000, "sha256": "d36585e3c5509ea16d4484bb7b2c9bf8e03f4e2874c575057a7de1dd2cb7487d", "start_ms": 1770076800000, "tip_mm": "0.2"}, "ack": true, "batch_id": "s2-gap", "batch_status": "accepted", "duplicate": false, "message_type": "seal", "schema": "telemetry-reply/1", "station_id": "S2", "status": "ACK"})
+  [PASS] all five tips stored exactly once
+  [PASS] tip before begin -> NACK unknown_batch, no batch row  ({"ack": false, "reason": "unknown_batch"})
+  [PASS] digest mismatch -> NACK, batch stays unaccepted  ({"computed": "8f5883c7ffbe61cc422fd0f0ff3c7ddd1e87df5aa34d7418fcbe2b1800b72cfd", "declared": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"})
+  [PASS] rejected: invalid_message  ({"ack": false, "reason": "invalid_message"})
+  [PASS] rejected: invalid_message  ({"ack": false, "reason": "invalid_message"})
+  [PASS] rejected: invalid_message  ({"ack": false, "reason": "invalid_message"})
+  [PASS] rejected: time_outside_interval  ({"ack": false, "reason": "time_outside_interval"})
+  [PASS] rejected: seq_out_of_range  ({"ack": false, "reason": "seq_out_of_range"})
+  [PASS] rejected: batch_already_accepted  ({"ack": false, "reason": "batch_already_accepted"})
+  [PASS] rejected: unknown_station  ({"ack": false, "reason": "unknown_station"})
+  [PASS] connection still usable after NACKs
+
+== scenario 8: two connections race the same seq ==
+  [PASS] exactly one concurrent writer wins  ({"a": "NACK", "b": "ACK"})
+  [PASS] loser gets tip_conflict  ({"received": {"time_ms": 1770271800000, "tips": 11}, "seq": 0, "stored": {"time_ms": 1770271800000, "tips": 12}})
+  [PASS] first committed content kept, exactly one row  ([{"seq": 0, "tips": 12}])
+  [PASS] resending the winning content is an ACK duplicate  ({"ack": true, "duplicate": true, "reason": null})
+
+== scenario 9: concurrent seal of overlapping batches ==
+  [PASS] exactly one overlapping batch accepted  ({"b": "ACK", "a": "NACK"})
+  [PASS] loser reports interval_conflict  ({"overlapping_batches": [{"batch_id": "ovl-2", "end_ms": 1770444000000, "start_ms": 1770429600000}]})
+  [PASS] one accepted row for the overlapping pair
+  [PASS] adjacent intervals sharing an endpoint both accepted
+
+== scenario 10: commit -> crash before ACK -> restart -> resend ==
+  [PASS] server exited before the ACK was sent  (exit=77)
+  [PASS] the committed tip is durably in SQLite after the crash  (tips seq 0 and 1)
+  [PASS] the un-ACKed tip counts as received but the batch is not accepted
+  [PASS] gateway resend after restart is fully ACKed  (5 replies)
+  [PASS] no tip duplicated by the resend  (3 tips)
+  [PASS] batch accepted exactly once
+
+== scenario 11-12: export values, gaps, decimal, rewrite ==
+  [PASS] export writes exactly the expected observation rows  (["S1 2026-02-01T03:00:00Z", "S1 2026-02-01T06:00:00Z", "S2 2026-02-01T03:00:00Z", "S2 2026-02-01T06:00:00Z", "S3 2026-02-01T03:00:00Z", "S3 2026-02-01T06:00:00Z", "S4 2026-02-01T03:00:00Z"])
+  [PASS] S1 03:00 = 1.2 mm  (1.2)
+  [PASS] S1 06:00 = 2.6 mm  (2.6)
+  [PASS] S2 03:00 = 1 mm  (1)
+  [PASS] S2 06:00 = 1.4 mm  (1.4)
+  [PASS] S3 03:00 = 0 mm  (0)
+  [PASS] S3 06:00 = 0 mm  (0)
+  [PASS] S4 03:00 = 0.6 mm  (0.6)
+  [PASS] pulse at exactly 03:00Z counted in 03-06, not 00-03
+  [PASS] adjacent batches jointly prove completeness (S2)
+  [PASS] full coverage with no pulses is a real 0, not missing
+  [PASS] 0.2 mm tips show no binary floating-point tail  (["0", "0.6", "1", "1.2", "1.4", "2.6"])
+  [PASS] version is 1 and issued_time is the requested one
+  [PASS] S4 06Z is not written (only unaccepted data there)
+  [PASS] S4 gap reported 03:00-06:00 as unaccepted_batch_only  ([{"station_id": "S4", "valid_time": "2026-02-01T06:00:00Z", "missing_start": "2026-02-01T03:00:00Z", "missing_end": "2026-02-01T06:00:00Z", "reason": "unaccepted_batch_only", "pending_batch_ids": "s4-pending"}])
+  [PASS] no gap is invented for fully covered stations  (["S4"])
+  [PASS] re-running export rebuilds the same file (no append)
+  [PASS] gap sidecar exists next to the observation file
+
+== scenario 11b: coverage missing exactly one second ==
+  [PASS] only the fully covered 00-03 bucket is exported  ([{"station_id": "S9", "valid_time": "2026-02-01T03:00:00Z", "precip_mm": "0.2", "version": 1, "issued_time": "2026-02-02T00:00:00Z"}])
+  [PASS] one-second hole reported as 03:00:00-03:00:01  ([{"station_id": "S9", "valid_time": "2026-02-01T06:00:00Z", "missing_start": "2026-02-01T03:00:00Z", "missing_end": "2026-02-01T03:00:01Z", "reason": "partial_gap", "pending_batch_ids": ""}])
+  [PASS] a one-second hole is NOT exported as 0 mm
+
+ALL 63 CHECKS PASSED

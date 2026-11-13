@@ -1,0 +1,16 @@
+{
+  "name": "telemetry",
+  "manifest_path": "/workspace/verif_pipeline/data/forecast/manifest.csv",
+  "obs_path": "/workspace/verif_pipeline/data/obs/station_obs_telemetry.csv",
+  "stations_path": "/workspace/verif_pipeline/data/obs/stations.csv",
+  "output_root": "/workspace/verif_pipeline/outputs",
+  "init_cutoff": "2026-02-01T12:00:00Z",
+  "obs_cutoff": "2026-02-03T00:00:00Z",
+  "thresholds": [
+    1.0,
+    5.0,
+    10.0
+  ],
+  "reliability_bin_width": 0.1,
+  "neg_diff_tolerance": 1e-06
+}

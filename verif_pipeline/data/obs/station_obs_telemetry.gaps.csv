@@ -1,0 +1,2 @@
+station_id,valid_time,missing_start,missing_end,reason,pending_batch_ids
+S4,2026-02-01T06:00:00Z,2026-02-01T03:00:00Z,2026-02-01T06:00:00Z,no_accepted_coverage,
