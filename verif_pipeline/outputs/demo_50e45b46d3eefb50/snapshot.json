@@ -1,0 +1,34 @@
+{
+  "config": {
+    "init_cutoff": "2026-02-01T12:00:00Z",
+    "name": "demo",
+    "neg_diff_tolerance": 1e-06,
+    "obs_cutoff": "2026-02-03T00:00:00Z",
+    "reliability_bin_width": 0.1,
+    "thresholds": [
+      1.0,
+      5.0,
+      10.0
+    ]
+  },
+  "frozen": {
+    "forecast_files_unused": 2,
+    "forecast_files_used": 5,
+    "obs_rows_excluded": 3,
+    "obs_rows_used": 24
+  },
+  "inputs": {
+    "forecast_files": {
+      "fcst_cyc2026020100_mem1_runb.nc": "893c13946d2c7f256d65475e60f96c78aa0ca59684da9cef8b7d22389825beec",
+      "fcst_cyc2026020100_mem2_runa.nc": "878f73fc125f5c44c5b2d81b1d996e7290250f2db2a7c784cc467a8f87f276fc",
+      "fcst_cyc2026020100_mem3_runa.nc": "bbf9858618720d782908b4f3524239c527aac79e406c3f24f003c4bc1843fb6e",
+      "fcst_cyc2026020112_mem1_runa.nc": "d51ee1b001d7e94a64215c8359e50fd224f5795047598ca119116be5a9442617",
+      "fcst_cyc2026020112_mem3_runa.nc": "4ed244b3a2df09731ddd245b1296f81f58d1ad2c3aad971e8ecd12d581122830"
+    },
+    "manifest_sha256": "fabf5471b375c6ffc94254454a30f653cd4fc6934d05153669ab5193e6ec5ebe",
+    "obs_file_sha256": "e7a1ed11b26307a77930c2cfeced589434ea6ef0320a940f6d4c1287f02e7213",
+    "stations_sha256": "a4a885d71f8b21076ff86bec7d98c2bb73c5028fe7ac2f2a1aa55beec0cd0f37"
+  },
+  "schema_version": "1.0",
+  "snapshot_id": "50e45b46d3eefb50"
+}

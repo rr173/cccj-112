@@ -17,7 +17,9 @@ import math
 import os
 from datetime import timedelta
 
-from .accum import FLAG_ANOMALY, FLAG_CLIPPED, FLAG_NAMES, FLAG_PERIOD_RESET, compute_intervals
+from .accum import (FLAG_ANOMALY, FLAG_CLIPPED, FLAG_MISSING_INPUT,
+                    FLAG_MISSING_PREV, FLAG_NAMES, FLAG_PERIOD_RESET,
+                    compute_intervals)
 from .config import load_config
 from .interpolate import bilinear_weights
 from .io_forecast import read_forecast_nc, read_manifest, resolve_manifest_paths, select_files
@@ -57,6 +59,11 @@ def run_analysis(config_path: str) -> str:
     manifest_rows = read_manifest(cfg.manifest_path)
     resolve_manifest_paths(manifest_rows, cfg.manifest_path)
     selected, unused = select_files(manifest_rows, cfg.init_cutoff)
+    # Expected members: the product-wide member set declared by the
+    # eligible manifest rows (cycle <= init_cutoff), fixed BEFORE any
+    # file-existence or data-quality filtering. A missing file or a bad
+    # grid point only reduces availability, never the expected set.
+    expected_members = sorted({m for _, m in selected})
     for key in sorted(selected):
         row = selected[key]
         if not os.path.exists(row["_abspath"]):
@@ -75,9 +82,7 @@ def run_analysis(config_path: str) -> str:
         fc[key] = d
 
     cycles = sorted({c for c, _ in fc})
-    # Expected members: the product-wide member set (union over cycles).
     # A member without a selected file in a cycle counts as missing there.
-    expected_members = sorted({m for _, m in fc})
 
     ref = next(iter(fc.values()))
     lats, lons, leads = ref["lats"], ref["lons"], ref["leads"]
@@ -109,7 +114,8 @@ def run_analysis(config_path: str) -> str:
                         "interval_mm": float(iv[ti, ilat, ilon]),
                         "flag": FLAG_NAMES[flag],
                     })
-                    if flag in (FLAG_PERIOD_RESET, FLAG_CLIPPED, FLAG_ANOMALY):
+                    if flag in (FLAG_PERIOD_RESET, FLAG_CLIPPED, FLAG_ANOMALY,
+                                FLAG_MISSING_INPUT, FLAG_MISSING_PREV):
                         event_rows.append({
                             "cycle": cycle, "member": member, "lead_hours": lead,
                             "valid_time": vt, "lat": lat, "lon": lon,

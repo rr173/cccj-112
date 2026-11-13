@@ -67,16 +67,46 @@ def select_files(rows: list, init_cutoff: str):
     return selected, unused
 
 
+def _decode_apcp(var) -> "np.ndarray":
+    """Decode the ``apcp`` variable into physical mm with NaN for missing.
+
+    Missing values are recognised as
+    * cells equal to the ``_FillValue`` or ``missing_value`` attribute(s)
+      (compared in stored units, before any unpacking),
+    * non-finite stored values (inf / nan),
+    * non-finite values after unpacking.
+
+    Packed variables (``scale_factor`` / ``add_offset``) are unpacked only
+    after masking, so a sentinel never takes part in arithmetic.
+    """
+    raw = np.array(var[:], dtype=np.float64)
+    attrs = set(var.ncattrs())
+    invalid = ~np.isfinite(raw)
+    for name in ("_FillValue", "missing_value"):
+        if name in attrs:
+            for s in np.atleast_1d(np.asarray(var.getncattr(name), dtype=np.float64)):
+                invalid |= raw == float(s)
+    scale = float(var.getncattr("scale_factor")) if "scale_factor" in attrs else 1.0
+    offset = float(var.getncattr("add_offset")) if "add_offset" in attrs else 0.0
+    out = raw * scale + offset
+    out[invalid] = np.nan
+    out[~np.isfinite(out)] = np.nan
+    return out
+
+
 def read_forecast_nc(path: str) -> dict:
     """Read one forecast file.
 
     ``apcp`` is ACCUMULATED precipitation (mm) since the start of the
     current accumulation period; see global attribute
-    ``reset_interval_hours``. It is never a per-hour rate.
+    ``reset_interval_hours``. It is never a per-hour rate. Missing values
+    (``_FillValue`` / ``missing_value`` / non-finite cells, also in packed
+    variables) are returned as NaN.
     """
     ds = netCDF4.Dataset(path)
     try:
         ds.set_auto_mask(False)
+        ds.set_auto_scale(False)
         data = {
             "cycle": str(ds.getncattr("cycle")),
             "member": int(ds.getncattr("member")),
@@ -84,7 +114,7 @@ def read_forecast_nc(path: str) -> dict:
             "leads": [int(x) for x in ds.variables["lead_hours"][:]],
             "lats": [float(x) for x in ds.variables["lat"][:]],
             "lons": [float(x) for x in ds.variables["lon"][:]],
-            "apcp": np.array(ds.variables["apcp"][:], dtype=float),
+            "apcp": _decode_apcp(ds.variables["apcp"]),
         }
     finally:
         ds.close()

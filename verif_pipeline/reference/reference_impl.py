@@ -12,6 +12,12 @@ implementation):
       CRPS = (1/M) sum_i |x_i - y| - (1/M^2) sum_i (2i - M - 1) x_(i)
   (exact for ties, since tied values carry adjacent coefficients)
   instead of the production pairwise double sum;
+* the expected member set is derived from the manifest alone (eligible
+  rows, cycle <= init_cutoff), never from the files that happen to be
+  readable, so a shared wrong denominator cannot pass silently;
+* ``_FillValue`` / ``missing_value`` / non-finite sentinels and
+  ``scale_factor`` / ``add_offset`` packing are decoded here with
+  separate code, so a placeholder scored as data is caught;
 * plain Python loops for differencing, interpolation and aggregation.
 """
 from __future__ import annotations
@@ -72,15 +78,46 @@ def _select_files(cfg):
     return {k: sorted(v)[0][2] for k, v in cands.items()}
 
 
+def _expected_members(cfg):
+    """Declared member set: union of ``member`` over manifest rows whose
+    cycle is at or before ``init_cutoff``. File existence and data
+    quality are irrelevant here -- the expected set is fixed by the
+    manifest alone (derived independently of the production code)."""
+    cutoff = _parse(cfg["init_cutoff"])
+    members = set()
+    with open(cfg["manifest_path"], newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if _parse(r["cycle"]) <= cutoff:
+                members.add(int(r["member"]))
+    return sorted(members)
+
+
 def _read_nc(path):
     ds = netCDF4.Dataset(path)
     try:
         ds.set_auto_mask(False)
+        ds.set_auto_scale(False)
+        var = ds.variables["apcp"]
+        stored = np.array(var[:], dtype=np.float64)
+        names = set(var.ncattrs())
+        lost = np.isinf(stored) | np.isnan(stored)
+        for att in ("_FillValue", "missing_value"):
+            if att in names:
+                for sentinel in np.atleast_1d(
+                        np.asarray(var.getncattr(att), dtype=np.float64)):
+                    lost |= stored == float(sentinel)
+        factor = float(var.getncattr("scale_factor")) \
+            if "scale_factor" in names else 1.0
+        shift = float(var.getncattr("add_offset")) \
+            if "add_offset" in names else 0.0
+        apcp = stored * factor + shift
+        apcp[lost] = np.nan
+        apcp[~np.isfinite(apcp)] = np.nan
         out = {
             "leads": [int(x) for x in ds.variables["lead_hours"][:]],
             "lats": [float(x) for x in ds.variables["lat"][:]],
             "lons": [float(x) for x in ds.variables["lon"][:]],
-            "apcp": np.array(ds.variables["apcp"][:], dtype=float),
+            "apcp": apcp,
             "reset": int(ds.getncattr("reset_interval_hours")),
         }
     finally:
@@ -184,7 +221,10 @@ def _compute_reference(config_path):
         raise ValueError("reference: no forecast files")
 
     cycles = sorted({c for c, _ in data})
-    members_expected = sorted({m for _, m in data})
+    # Expected members: declared by the eligible manifest rows (cycle <=
+    # init_cutoff), derived here independently of which files exist or
+    # decode cleanly -- never from the readable files themselves.
+    members_expected = _expected_members(cfg)
     any_d = next(iter(data.values()))
     leads, lats, lons = any_d["leads"], any_d["lats"], any_d["lons"]
 
@@ -193,6 +233,7 @@ def _compute_reference(config_path):
     obs = _select_obs(cfg)
 
     station_probs = {}   # (cycle, lead, sid, thr) -> (prob, n_valid)
+    case_valid = {}      # (cycle, lead, sid) -> n_valid (0 allowed)
     thr_groups = {}      # (cycle, lead, region, thr) -> [(prob, obs, w, cov)]
     crps_groups = {}     # (cycle, lead, region) -> [(crps, w, cov)]
     for cycle in cycles:
@@ -218,6 +259,7 @@ def _compute_reference(config_path):
                         total += wij * x
                     if ok:
                         vals.append(total)
+                case_valid[(cycle, lead, sid)] = len(vals)
                 o = obs.get((sid, vt))
                 obs_mm = float(o["precip_mm"]) if o else None
                 cov = len(vals) / len(members_expected) if members_expected else NAN
@@ -243,7 +285,9 @@ def _compute_reference(config_path):
         "regions": sorted({st["region"] for st in stations}),
         "thresholds": thresholds,
         "binw": binw,
+        "n_expected": len(members_expected),
         "station_probs": station_probs,
+        "case_valid": case_valid,
         "thr_groups": thr_groups,
         "crps_groups": crps_groups,
     }
@@ -309,19 +353,31 @@ def run_check(config_path, outdir, tol=1e-9, verbose=True):
         check(f"crps {key}", _f(row["crps"]), _wmean([(c, w) for c, w, _ in cases]))
         check(f"crps n_cases {key}", _f(row["n_cases"]), float(len(cases)))
 
-    # --- station-level probabilities and valid-member denominators
+    # --- station-level probabilities and member denominators
+    # Every production row is checked against the independently derived
+    # valid count, expected-member set and coverage -- including rows
+    # with zero valid members, so a sentinel scored as data or an
+    # expected set silently shrunk to the readable files is caught here.
+    denom_checked = set()
     for row in _read_production_csv(os.path.join(outdir, "station_probs.csv")):
-        key = (row["cycle"], int(row["lead_hours"]), row["station_id"],
-               _f(row["threshold_mm"]))
+        ckey = (row["cycle"], int(row["lead_hours"]), row["station_id"])
+        key = ckey + (_f(row["threshold_mm"]),)
         got_p = _f(row["forecast_prob"])
-        got_n = _f(row["n_valid_members"])
         want = ref["station_probs"].get(key)
         if want is None:
             if not math.isnan(got_p):
                 mismatches.append(f"station_prob {key}: production={got_p!r} reference=missing")
+        else:
+            check(f"station_prob {key}", got_p, want[0])
+        if ckey in denom_checked:
             continue
-        check(f"station_prob {key}", got_p, want[0])
-        check(f"station_n_valid {key}", got_n, float(want[1]))
+        denom_checked.add(ckey)
+        want_n_valid = float(ref["case_valid"].get(ckey, 0))
+        check(f"station_n_valid {ckey}", _f(row["n_valid_members"]), want_n_valid)
+        check(f"station_n_expected {ckey}", _f(row["n_expected_members"]),
+              float(ref["n_expected"]))
+        want_cov = want_n_valid / ref["n_expected"] if ref["n_expected"] else NAN
+        check(f"station_coverage {ckey}", _f(row["member_coverage"]), want_cov)
 
     if verbose:
         n_groups = (
