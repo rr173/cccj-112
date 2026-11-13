@@ -1,0 +1,14 @@
+{
+  "block_size": 65536,
+  "digest_match": true,
+  "k": 6,
+  "peak_rss_mib": 22.91,
+  "restored_sha256": "59d10de7f136cf8d42745a3805d349fe0550920e6e8f334d1f728b2d729cc92e",
+  "rss_limit_mib": 64.0,
+  "source_bytes": 268435456,
+  "source_sha256": "59d10de7f136cf8d42745a3805d349fe0550920e6e8f334d1f728b2d729cc92e",
+  "stripe_length": 44761088,
+  "stripes": 8,
+  "wall_seconds": 5.12,
+  "within_budget": true
+}

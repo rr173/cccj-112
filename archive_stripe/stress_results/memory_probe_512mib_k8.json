@@ -1,0 +1,18 @@
+{
+  "block_size": 262144,
+  "budget_mib": 96.0,
+  "dataset_mib": 512.0,
+  "digest_match": true,
+  "k": 8,
+  "lost_stripes": [
+    "D0.bin",
+    "D1.bin"
+  ],
+  "peak_below_budget": true,
+  "peak_rss_mib": 27.18,
+  "recovery_mode": "double",
+  "restored_sha256": "30b56d7d44055e8429c274a3418a8ad4397c5cf9539f81bc969c6d1dada3a8b2",
+  "source_bytes": 536870912,
+  "source_sha256": "30b56d7d44055e8429c274a3418a8ad4397c5cf9539f81bc969c6d1dada3a8b2",
+  "wall_seconds": 17.55
+}
