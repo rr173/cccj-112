@@ -1,0 +1,48 @@
+{
+  "build": {
+    "peak_rss_kib": 29264,
+    "wall_s": 20.472
+  },
+  "full_scan": {
+    "data_bytes_read": 131065271,
+    "pages_read": 310,
+    "peak_rss_kib": 31884,
+    "wall_s": 5.048
+  },
+  "groups": 62,
+  "input_bytes": 203529344,
+  "narrow_scan": {
+    "columns_read": [
+      "amount_cents",
+      "region"
+    ],
+    "conditions": [
+      [
+        "amount_cents",
+        "gt",
+        10
+      ]
+    ],
+    "data_bytes_read": 5252159,
+    "first_row": "[null]\n",
+    "index_bytes_read": {
+      "catalog": 62715,
+      "header": 80
+    },
+    "output_bytes": 2289680,
+    "pages_read": 84,
+    "peak_rss_kib": 16016,
+    "projection": [
+      "region"
+    ],
+    "row_groups_checked": 42,
+    "row_groups_skipped_by_stats": 20,
+    "row_groups_total": 62,
+    "rows_out": 250000,
+    "wall_s": 1.128
+  },
+  "narrow_to_full_data_bytes": 0.0401,
+  "row_group_rows": 16384,
+  "rows": 1000000,
+  "store_bytes": 131128066
+}

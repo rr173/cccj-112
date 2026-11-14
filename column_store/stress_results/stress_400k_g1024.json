@@ -1,0 +1,48 @@
+{
+  "build": {
+    "peak_rss_kib": 18692,
+    "wall_s": 7.308
+  },
+  "full_scan": {
+    "data_bytes_read": 52074751,
+    "pages_read": 1955,
+    "peak_rss_kib": 17332,
+    "wall_s": 2.314
+  },
+  "groups": 391,
+  "input_bytes": 80987508,
+  "narrow_scan": {
+    "columns_read": [
+      "amount_cents",
+      "region"
+    ],
+    "conditions": [
+      [
+        "amount_cents",
+        "gt",
+        10
+      ]
+    ],
+    "data_bytes_read": 2110030,
+    "first_row": "[\"Norte\"]\n",
+    "index_bytes_read": {
+      "catalog": 381828,
+      "header": 80
+    },
+    "output_bytes": 915871,
+    "pages_read": 522,
+    "peak_rss_kib": 15628,
+    "projection": [
+      "region"
+    ],
+    "row_groups_checked": 261,
+    "row_groups_skipped_by_stats": 130,
+    "row_groups_total": 391,
+    "rows_out": 100000,
+    "wall_s": 0.419
+  },
+  "narrow_to_full_data_bytes": 0.0405,
+  "row_group_rows": 1024,
+  "rows": 400000,
+  "store_bytes": 52456659
+}
