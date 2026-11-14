@@ -1,0 +1,14 @@
+{
+  "catalog_body": {
+    "sha256_hex": "ac296712d12110de5a0e526793ababf0c0a12470491980c61b1cc59b3d1a2cfa",
+    "decoded_length": 141,
+    "gzip_wire_length": 127
+  },
+  "second_body": {
+    "exact_bytes_hex": "7b22737461747573223a2022636174616c6f672d66657463682d636f6d706c657465222c2022636f756e74223a20337d0a",
+    "length": 49
+  },
+  "connection_b_failure_reason": "byte_conflict",
+  "expected_exit_code": 1,
+  "expected_published_object_count": 2
+}

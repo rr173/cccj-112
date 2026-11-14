@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "four_tuple": {
+    "client_ip": "198.51.100.7",
+    "client_port": 51001,
+    "server_ip": "203.0.113.10",
+    "server_port": 8080
+  },
+  "http_response_index": 2,
+  "object_index": 2,
+  "status_code": 200,
+  "reason_phrase": "OK",
+  "headers": [
+    {
+      "name": "Content-Length",
+      "value": "49"
+    },
+    {
+      "name": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "stream_offsets": {
+    "response_start": 311,
+    "header_end": 382,
+    "body_start": 382,
+    "body_end": 431
+  },
+  "framing": "length",
+  "wire_body_length_bytes": 49,
+  "content_encoding": null,
+  "raw_body_length_bytes": 49,
+  "decoded_body_length_bytes": 49,
+  "body_sha256": "1c45c297194845c8dda3c444b9a097ea81bde3d74369d835cab106715c3d2227",
+  "body_file": "body_2.bin"
+}

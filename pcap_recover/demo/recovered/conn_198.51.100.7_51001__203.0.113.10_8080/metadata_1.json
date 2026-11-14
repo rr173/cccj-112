@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "four_tuple": {
+    "client_ip": "198.51.100.7",
+    "client_port": 51001,
+    "server_ip": "203.0.113.10",
+    "server_port": 8080
+  },
+  "http_response_index": 1,
+  "object_index": 1,
+  "status_code": 200,
+  "reason_phrase": "OK",
+  "headers": [
+    {
+      "name": "Transfer-Encoding",
+      "value": "chunked"
+    },
+    {
+      "name": "Content-Type",
+      "value": "application/jsonl"
+    },
+    {
+      "name": "Content-Encoding",
+      "value": "gzip"
+    },
+    {
+      "name": "X-Catalog",
+      "value": "vendor-directory"
+    }
+  ],
+  "stream_offsets": {
+    "response_start": 0,
+    "header_end": 133,
+    "body_start": 133,
+    "body_end": 311
+  },
+  "framing": "chunked",
+  "wire_body_length_bytes": 178,
+  "content_encoding": "gzip",
+  "raw_body_length_bytes": 127,
+  "decoded_body_length_bytes": 141,
+  "body_sha256": "ac296712d12110de5a0e526793ababf0c0a12470491980c61b1cc59b3d1a2cfa",
+  "body_file": "body_1.bin"
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "source_pcap": "/workspace/pcap_recover/demo/data/two_downloads.pcap",
+  "endpoint_config": "/workspace/pcap_recover/demo/data/endpoints.json",
+  "summary": {
+    "selected_connections": 2,
+    "successful_connections": 1,
+    "failed_connections": 1,
+    "published_objects": 2
+  },
+  "connections": [
+    {
+      "status": "ok",
+      "four_tuple": {
+        "client_ip": "198.51.100.7",
+        "client_port": 51001,
+        "server_ip": "203.0.113.10",
+        "server_port": 8080
+      },
+      "first_packet_index": 1,
+      "last_packet_index": 11,
+      "stream_length_bytes": 431,
+      "response_count": 2,
+      "object_count": 2,
+      "connection_dir": "conn_198.51.100.7_51001__203.0.113.10_8080",
+      "objects": [
+        {
+          "object_index": 1,
+          "http_response_index": 1,
+          "status_code": 200,
+          "framing": "chunked",
+          "body_file": "conn_198.51.100.7_51001__203.0.113.10_8080/body_1.bin",
+          "body_sha256": "ac296712d12110de5a0e526793ababf0c0a12470491980c61b1cc59b3d1a2cfa",
+          "wire_body_length_bytes": 178,
+          "raw_body_length_bytes": 127,
+          "decoded_body_length_bytes": 141,
+          "stream_offsets": {
+            "response_start": 0,
+            "header_end": 133,
+            "body_start": 133,
+            "body_end": 311
+          }
+        },
+        {
+          "object_index": 2,
+          "http_response_index": 2,
+          "status_code": 200,
+          "framing": "length",
+          "body_file": "conn_198.51.100.7_51001__203.0.113.10_8080/body_2.bin",
+          "body_sha256": "1c45c297194845c8dda3c444b9a097ea81bde3d74369d835cab106715c3d2227",
+          "wire_body_length_bytes": 49,
+          "raw_body_length_bytes": 49,
+          "decoded_body_length_bytes": 49,
+          "stream_offsets": {
+            "response_start": 311,
+            "header_end": 382,
+            "body_start": 382,
+            "body_end": 431
+          }
+        }
+      ]
+    },
+    {
+      "status": "failed",
+      "four_tuple": {
+        "client_ip": "198.51.100.8",
+        "client_port": 51002,
+        "server_ip": "203.0.113.10",
+        "server_port": 8080
+      },
+      "first_packet_index": 2,
+      "last_packet_index": 12,
+      "failure_reason": "byte_conflict",
+      "failure_detail": "different bytes at stream offset 0 (packet 10)"
+    }
+  ]
+}
